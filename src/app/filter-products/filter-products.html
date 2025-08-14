@@ -1,0 +1,148 @@
+ <div class="filter-container">
+      <div class="filter-header">
+        <h3>Filters</h3>
+        <button class="clear-btn" (click)="clearFilters()">Clear All</button>
+      </div>
+
+      <div class="filter-sections">
+        <!-- Price Range Filter -->
+        <div class="filter-section">
+          <h4>Price Range</h4>
+          <div class="price-inputs">
+            <div class="input-group">
+              <label>Min: $</label>
+              <input 
+                type="number" 
+                [(ngModel)]="filters.minPrice" 
+                (ngModelChange)="onFilterChange()"
+                [min]="priceRange.min"
+                [max]="priceRange.max"
+                class="price-input">
+            </div>
+            <div class="input-group">
+              <label>Max: $</label>
+              <input 
+                type="number" 
+                [(ngModel)]="filters.maxPrice" 
+                (ngModelChange)="onFilterChange()"
+                [min]="priceRange.min"
+                [max]="priceRange.max"
+                class="price-input">
+            </div>
+          </div>
+          <div class="range-slider">
+            <input 
+              type="range" 
+              [(ngModel)]="filters.minPrice" 
+              (ngModelChange)="onFilterChange()"
+              [min]="priceRange.min" 
+              [max]="priceRange.max"
+              class="slider min-slider">
+            <input 
+              type="range" 
+              [(ngModel)]="filters.maxPrice" 
+              (ngModelChange)="onFilterChange()"
+              [min]="priceRange.min" 
+              [max]="priceRange.max"
+              class="slider max-slider">
+          </div>
+        </div>
+
+        <!-- Rating Filter -->
+        <div class="filter-section">
+          <h4>Minimum Rating</h4>
+          <div class="rating-options">
+            <div *ngFor="let rating of [0, 1, 2, 3, 4]" class="rating-option">
+              <input 
+                type="radio" 
+                [id]="'rating-' + rating"
+                name="rating"
+                [value]="rating"
+                [(ngModel)]="filters.minRating"
+                (ngModelChange)="onFilterChange()">
+              <label [for]="'rating-' + rating" class="rating-label">
+                <span class="stars">
+                  <span *ngFor="let star of getStarArray(rating)" class="star">★</span>
+                  <span *ngFor="let star of getStarArray(5 - rating)" class="star empty">☆</span>
+                </span>
+                <span class="rating-text">{{ rating === 0 ? 'Any' : rating + '+ stars' }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Brand Filter -->
+        <div class="filter-section" *ngIf = "availableBrands.length > 0">
+          <h4>Brands</h4>
+          <div class="brand-search">
+            <input 
+              type="text" 
+              placeholder="Search brands..."
+              [(ngModel)]="brandSearchTerm"
+              class="search-input">
+          </div>
+          <div class="checkbox-list" [class.expanded]="showAllBrands">
+            <div *ngFor="let brand of getFilteredBrands()" class="checkbox-item">
+              <input 
+                type="checkbox"
+                [id]="'brand-' + brand"
+                [value]="brand"
+                [checked]="filters.selectedBrands.includes(brand)"
+                (change)="onBrandChange(brand, $event)">
+              <label [for]="'brand-' + brand">{{ brand }}</label>
+            </div>
+          </div>
+          <button 
+            *ngIf="availableBrands.length > 5" 
+            class="show-more-btn"
+            (click)="showAllBrands = !showAllBrands">
+            {{ showAllBrands ? 'Show Less' : 'Show More' }}
+          </button>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-section">
+          <h4>Categories</h4>
+          <div class="checkbox-list">
+            <div *ngFor="let category of availableCategories" class="checkbox-item">
+              <input 
+                type="checkbox"
+                [id]="'category-' + category"
+                [value]="category"
+                [checked]="filters.categories.includes(category)"
+                (change)="onCategoryChange(category, $event)">
+              <label [for]="'category-' + category">{{ category | titlecase }}</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stock Availability Filter -->
+        <div class="filter-section">
+          <h4>Availability</h4>
+          <div class="checkbox-item">
+            <input 
+              type="checkbox"
+              id="in-stock"
+              [(ngModel)]="filters.inStockOnly"
+              (ngModelChange)="onFilterChange()">
+            <label for="in-stock">In Stock Only</label>
+          </div>
+        </div>
+
+        <!-- Return Policy Filter -->
+        <div class="filter-section">
+          <h4>Return Policy</h4>
+          <div class="checkbox-list">
+            <div *ngFor="let policy of availableReturnPolicies" class="checkbox-item">
+              <input 
+                type="checkbox"
+                [id]="'return-' + policy"
+                [value]="policy"
+                [checked]="filters.returnPolicyTypes.includes(policy)"
+                (change)="onReturnPolicyChange(policy, $event)">
+              <label [for]="'return-' + policy">{{ policy }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

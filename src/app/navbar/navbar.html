@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-sm fixed-top">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" style="font-size:1.5rem; font-weight:700;" href="#">
+            <i class="fa-solid fa-gifts fa-lg" style="color: #443b81;"></i>
+        Shopsee</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        
+            <ul class="navbar-nav">
+        
+                <li class="nav-item me-2 h5">
+                    <a class="nav-link" 
+            
+                    aria-current="page" 
+                    (click)="gotoHome()">
+                    Home
+                    </a>
+                </li>
+
+                <li class="nav-item me-2 d-flex flex-column align-items-start align-items-sm-center">
+                <i class="fa-regular fa-heart fa-xl mt-3" ></i>                
+                <a class="nav-link mt-1" 
+                style="font-size:0.8rem;" 
+                (click)="ShowWishList()">Wishlist</a>
+                </li>
+                
+                <li class="nav-item me-2 d-flex flex-column align-items-start align-items-sm-center">
+                <i class="fa-solid fa-cart-shopping fa-xl mt-3" ></i>                
+                <a class="nav-link mt-1" 
+                style="font-size:0.8rem;" 
+                (click)="ShowCart()">Cart</a>
+                </li> 
+                
+                <!-- <li class="nav-item me-2 d-flex flex-column align-items-start align-items-sm-center">
+                <i class="fa-regular fa-circle-user fa-xl mt-3" ></i>
+                <a class="nav-link mt-1" style="font-size:0.8rem;" href="#">Profile</a>
+                </li>  -->
+                
+                <!-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Genres
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">fgggh</a></li>
+                    </ul>    
+                </li> -->
+
+                <li class="nav-item me-2 h5">
+                    <a class="nav-link" 
+                    aria-current="page" 
+            
+                    (click)="gotoLogin()">
+                    Login/Sign Up</a>
+                </li>
+
+                <li class="nav-item me-2 h5">
+                    <a class="nav-link" 
+                    aria-current="page" 
+            
+                    (click)="logout()">
+                    Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+</nav>

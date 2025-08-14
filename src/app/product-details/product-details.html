@@ -1,0 +1,213 @@
+<app-search></app-search>
+
+<div class="product-container" *ngIf="product">
+  <button class="btn btn-primary goBack" (click)="goBackToProductsPage()"><- Back></button>
+
+  <div class="product-details-container">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading product details...</p>
+  </div>
+
+  <!-- No Product State -->
+  <div *ngIf="!loading && !product" class="empty-state">
+    <div class="empty-icon">🛍️</div>
+    <h3>No product selected</h3>
+    <p>Select a product to view its details</p>
+  </div>
+
+  <!-- Product Details -->
+  <div *ngIf="!loading && product" class="product-content">
+    <!-- Product Images -->
+    <div class="product-images">
+      <div class="main-image">
+        <img 
+          [src]="product.images[currentImageIndex] || product.thumbnail" 
+          [alt]="product.title"
+          class="product-image">
+        
+        <!-- Navigation arrows -->
+        <button 
+          *ngIf="product.images.length > 1"
+          class="nav-btn prev-btn" 
+          (click)="prevImage()">
+          <
+        </button>
+        <button 
+          *ngIf="product.images.length > 1"
+          class="nav-btn next-btn" 
+          (click)="nextImage()">
+          ›
+        </button>
+      </div>
+      
+      <!-- Thumbnail gallery -->
+      <div *ngIf="product.images.length > 1" class="thumbnail-gallery">
+        <img 
+          *ngFor="let image of product.images; let i = index"
+          [src]="image"
+          [alt]="product.title"
+          class="thumbnail"
+          [class.active]="i === currentImageIndex"
+          (click)="selectImage(i)">
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-info">
+      <!-- Header -->
+      <div class="product-header">
+        <div class="title-section">
+          <h1 class="product-title">{{ product.title }}</h1>
+          <span class="brand" *ngIf="product.brand">{{ product.brand }}</span>
+          <div class="category-tag">{{ product.category }}</div>
+        </div>
+        
+        <!-- Stock Status -->
+        <div class="stock-status" [ngClass]="getStockStatus(product.stock)">
+          {{ getStockStatusText(product.stock) }}
+          <span class="stock-count">({{ product.stock }} left)</span>
+        </div>
+      </div>
+
+      <!-- Rating -->
+      <div class="rating-section">
+        <div class="stars">
+          <span 
+            *ngFor="let star of getRatingStars(product.rating)"
+            class="star"
+            [class.filled]="star === '★'">
+            {{ star }}
+          </span>
+        </div>
+        <span class="rating-value">{{ product.rating }}/5</span>
+        <span class="review-count">({{ product.reviews.length }} reviews)</span>
+      </div>
+
+      <!-- Price -->
+      <div class="price-section">
+        <div class="current-price">
+          ${{ getDiscountedPrice(product.price, product.discountPercentage).toFixed(2) }}
+        </div>
+        <div class="original-price" *ngIf="product.discountPercentage > 0">
+          ${{ product.price.toFixed(2) }}
+        </div>
+        <div class="discount" *ngIf="product.discountPercentage > 0">
+          {{ product.discountPercentage }}% OFF
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="description-section">
+        <h3>Description</h3>
+        <p class="description">{{ product.description }}</p>
+      </div>
+
+      <!-- Tags -->
+      <div class="tags-section" *ngIf="product.tags.length > 0">
+        <h3>Tags</h3>
+        <div class="tags-container">
+          <span *ngFor="let tag of product.tags" class="tag">{{ tag }}</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div *ngIf="showActions" class="actions-section">
+        <button 
+          class="btn btn-primary add-to-cart"
+          [disabled]="product.stock === 0"
+          (click)="addToCart(product)">
+          <span class="icon">🛒</span>
+          Add to Cart
+        </button>
+
+        <button class="btn btn-secondary" 
+        *ngIf="WishlistProductIDs.includes(product.id)"
+        (click)="removeFromWishlist(product.id)">
+          <span class="icon">❤️</span>
+        </button>
+
+        <button class="btn btn-secondary" 
+        *ngIf="!WishlistProductIDs.includes(product.id)"
+        (click)="addToWishlist(product)">
+          <span class="icon">🤍</span>
+        </button>
+        
+      </div>
+
+      <!-- Product Specifications -->
+      <div class="specs-section">
+        <h3>Specifications</h3>
+        <div class="specs-grid">
+          <div class="spec-item">
+            <label>SKU:</label>
+            <span>{{ product.sku }}</span>
+          </div>
+          <div class="spec-item">
+            <label>Weight:</label>
+            <span>{{ product.weight }} kg</span>
+          </div>
+          <div class="spec-item">
+            <label>Dimensions:</label>
+            <span>{{ product.dimensions.width }} × {{ product.dimensions.height }} × {{ product.dimensions.depth }} cm</span>
+          </div>
+          <div class="spec-item">
+            <label>Min Order:</label>
+            <span>{{ product.minimumOrderQuantity }} units</span>
+          </div>
+          <div class="spec-item">
+            <label>Barcode:</label>
+            <span>{{ product.meta.barcode }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping & Return Info -->
+      <div class="info-section">
+        <h3>Shipping & Returns</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Warranty:</label>
+            <span>{{ product.warrantyInformation }}</span>
+          </div>
+          <div class="info-item">
+            <label>Shipping:</label>
+            <span>{{ product.shippingInformation }}</span>
+          </div>
+          <div class="info-item">
+            <label>Return Policy:</label>
+            <span>{{ product.returnPolicy }}</span>
+          </div>
+          <div class="info-item">
+            <label>Availability:</label>
+            <span>{{ product.availabilityStatus }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews -->
+      <div class="reviews-section" *ngIf="product.reviews.length > 0">
+        <h3>Customer Reviews ({{ product.reviews.length }})</h3>
+        <div class="reviews-list">
+          <div *ngFor="let review of product.reviews.slice(0, 3)" class="review-item">
+            <div class="review-header">
+              <div class="reviewer-info">
+                <strong>{{ review.reviewerName }}</strong>
+                <div class="review-stars">
+                  <span *ngFor="let star of getRatingStars(review.rating)" class="star-small">★</span>
+                </div>
+              </div>
+              <span class="review-date">{{ review.date | date:'short' }}</span>
+            </div>
+            <p class="review-comment">{{ review.comment }}</p>
+          </div>
+          <button *ngIf="product.reviews.length > 3" class="btn btn-link">
+            View all {{ product.reviews.length }} reviews
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

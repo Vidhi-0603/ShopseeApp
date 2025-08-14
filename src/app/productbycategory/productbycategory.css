@@ -1,0 +1,323 @@
+/* Container for both filter and products */
+body{
+  height: 100%;
+  overflow:hidden;
+}
+.responsive-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  /* border:1px solid rgb(96, 214, 96); */
+  margin-top: 150px;
+  height:100vh;
+  overflow: hidden;
+  /* width:100vw; */
+}
+
+/* Filter Sidebar */
+.filter-sidebar {
+  width: 15vw;
+  min-width: 250px;
+  background: #f8f9fa;
+  height:100vh;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+}
+
+
+
+.container{
+    flex: 1;
+    height:100vh;
+    overflow-y: auto;
+}
+.filter-toggle-btn {
+  display: none;
+  position: fixed;
+  top:130px;
+  z-index: 1002;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: clamp(0.8rem,2vw,1.2rem);
+  cursor: pointer;
+}
+
+/* Overlay for small screen filter modal */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+/* Small screen adjustments */
+@media (max-width: 426px) {
+  .responsive-container {
+    flex-direction: column;
+    padding-top:10px;
+  }
+
+  .filter-sidebar {
+    position: fixed;
+    top: 160px;
+    left: -100%;
+    /* width: 100vw; */
+    height: 100vh;
+    background: #fff;
+    z-index: 1002;
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+  }
+
+  .filter-sidebar.open {
+    left: 0;
+  }
+
+  .filter-toggle-btn {
+    display: block;
+  }
+
+  .container {
+    width: 100%;
+    padding: 0px;
+  }
+
+  .products {
+    justify-content: center;
+  }
+
+  .product {
+    width: 48%;
+  }
+}
+
+.products{
+    /* position: absolute;
+    left:320px; */
+    /* width:97vw; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
+}
+.products::-webkit-scrollbar {
+  display: none;
+}
+.product{
+    max-width:270px;
+    width:43vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap:wrap;
+    text-align: center;
+    margin: 0.5rem;
+    border:1px solid #ccc;
+    border-radius: 0.8rem;
+}
+.product img {
+    margin-top:0.5rem;
+    width: 100%;
+    /* height: 230px; */
+    aspect-ratio: 8/7;
+    object-fit: cover;
+    /* border: 1px solid #ccc; */
+    transition: transform 0.3s ease;
+}
+.product img:hover {
+  transform: scale(1.08); /* scale image 10% bigger */
+}
+
+
+.product-info {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(0.6rem, 1.2rem, 1.5rem);
+
+}
+.name-tag{
+    display:flex;
+    justify-content:space-between;
+    /* align-items: center; */
+    flex-wrap: wrap;
+    /* border:1px solid green; */
+}
+.heart-icon {
+    /* background: rgb(205, 196, 196); */
+    border-radius: 50%;
+    max-width: 40px;
+    max-height: 40px;
+    width: 5vw;
+    height: 5vw;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    color: #ff4757;
+    font-size: clamp(0.8rem, 1.3vw, 1.5rem);
+    animation: pulse 2s infinite;
+}
+.product-name {
+    /* font-size: 1.2rem; */
+    font-size: clamp(0.6rem, 2vw, 1.3rem);
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    height:100%;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    line-height: 1;
+    /* border:1px solid #0d2b14; */
+    /* display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical; */
+    overflow: hidden;
+}
+.product-description {
+    color: #666;
+    font-size: clamp(0.6rem, 1vw, 1rem);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.product-price {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.current-price {
+    font-size: clamp(0.7rem, 2vw, 1rem);
+    font-weight: 700;
+    color: #667eea;
+}
+.original-price {
+    font-size: clamp(0.5rem, 1.5vw, 1rem);
+    color: #999;
+    text-decoration: line-through;
+}
+.discount-badge {
+    background: #ff4757;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 12px;
+    font-size: clamp(0.5rem, 1.5vw, 0.8rem);
+    font-weight: 600;
+}
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.stars {
+    color: #ffc107;
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
+}
+ .rating-text {
+    color: #666;
+    font-size: clamp(0.6rem, 1.5vw, 1.2rem);
+}
+.stock-status {
+    margin-bottom: 10px;
+    font-size: clamp(0.6rem, 1.5vw, 1.2rem);
+    font-weight: 600;
+}
+ .stock-status.in-stock {
+    color: #27ae60;
+}
+
+.stock-status.out-of-stock {
+    color: #e74c3c;
+}
+
+.product-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 8px;
+    font-size: clamp(0.6rem, 1.5vw, 1rem);
+    flex-wrap: wrap;
+}
+.brand {
+    background: #f8f9fa;
+    padding: 4px 8px;
+    border-radius: 8px;
+    color: #495057;
+    font-weight: 600;
+}
+
+.category {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.product-actions {
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn {
+    padding: 7px 8px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    flex: 1;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+
+
+p{
+    font-size: 0.9rem;
+    color: #0d2b14;
+    margin: 5px 0;
+    text-align: justify;
+}
+.loadingIndicator{
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin: 100px auto;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

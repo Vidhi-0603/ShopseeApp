@@ -1,0 +1,49 @@
+<div class="box">
+  <div class="container">
+    <app-snackbar 
+      [errorMessage]="errorMessage"
+      *ngIf="errorMessage">
+    </app-snackbar>
+    <form class="login-form"
+          #loginForm="ngForm"
+          (ngSubmit)="onSubmit(loginForm)"
+          >
+      <h2>{{isSignedUp ? 'Login' : 'Sign Up'}}</h2>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" 
+              id="email" 
+              placeholder="Enter your email" 
+              name = "email"
+              #emailAdd="ngModel"
+              [(ngModel)]="email"
+              required 
+              email />
+      </div>
+      <div *ngIf="emailAdd.invalid && emailAdd.touched" class="error">
+        Email is required
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" 
+              id="password" 
+              placeholder="Enter your password" 
+              name = "password"
+              minlength="6"
+              [(ngModel)]="password"
+              #pass="ngModel"
+              autocomplete="new-password"
+              required/>
+      </div>
+      <div *ngIf="pass.invalid && pass.touched" class="error">
+        Password is required and must be at least 6 characters
+      </div>
+      <button type="submit">{{isSignedUp ? 'Login' : 'Sign Up'}}</button>
+      <p class="signup-link">{{isSignedUp ? "Don't have an account?" : 'Already have an account?'}} 
+        <a (click)="toggle()">{{isSignedUp ? 'Sign Up' : 'Login Here'}}</a>
+      </p>
+    </form>
+  </div>
+
+</div>
+  

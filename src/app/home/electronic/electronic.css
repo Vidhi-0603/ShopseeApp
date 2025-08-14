@@ -1,0 +1,217 @@
+.products{
+    overflow-x: auto;
+    margin:10px 20px;
+    width:95vw;
+    display: flex;
+    padding-left: 3.5rem;
+    /* border: 1px solid; */
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+.products::-webkit-scrollbar {
+  display: none;
+}
+.product{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    scroll-snap-align: start;
+    text-align: center;
+    margin: 10px;
+    border:1px solid #ccc;
+    border-radius: 0.8rem;
+    /* box-shadow: 0 8px 25px rgba(189, 62, 50, 0.5); */
+
+}
+.product img {
+    margin-top:0.5rem;
+    max-width: 275px;
+    /* min-width:230px; */
+    width:80vw;
+    /* height: 230px; */
+    aspect-ratio: 6/6;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.product img:hover {
+  transform: scale(1.08); /* scale image 10% bigger */
+}
+
+
+.product-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+
+}
+.name-tag{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.product-name {
+    /* font-size: 1.2rem; */
+    font-size: clamp(0.8rem, 1.05rem, 1.2rem);
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    /* display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical; */
+    overflow: hidden;
+}
+.product-description {
+    color: #666;
+    font-size: clamp(0.5rem, 0.9rem, 1.2rem);
+    margin-bottom: 15px;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.product-price {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.current-price {
+    font-size: clamp(1rem, 1vw, 1.3rem);
+    font-weight: 700;
+    color: #667eea;
+}
+.original-price {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    color: #999;
+    text-decoration: line-through;
+}
+.discount-badge {
+    background: #ff4757;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    font-weight: 600;
+}
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+.stars {
+    color: #ffc107;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+}
+ .rating-text {
+    color: #666;
+    font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+}
+.stock-status {
+    margin-bottom: 10px;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-weight: 600;
+}
+ .stock-status.in-stock {
+    color: #27ae60;
+}
+
+.stock-status.out-of-stock {
+    color: #e74c3c;
+}
+
+.product-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+}
+.brand {
+    background: #f8f9fa;
+    padding: 4px 12px;
+    border-radius: 15px;
+    color: #495057;
+    font-weight: 600;
+}
+
+.category {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.product-actions {
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    flex: 1;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+
+.heart-icon {
+    /* background: rgba(33, 15, 15, 0.9); */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items:flex-start;
+    justify-content: center;
+    color: #ff4757;
+    font-size: 1.2rem;
+    animation: pulse 2s infinite;
+}
+p{
+    font-size: 0.9rem;
+    color: #0d2b14;
+    margin: 5px 0;
+    text-align: justify;
+}
+.loadingIndicator{
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin: 100px auto;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -1,0 +1,116 @@
+<div class="box mt-5">
+     <div class="wishlist-container">
+        <!-- Header -->
+        <div class="wishlist-header">
+            <h1 class="wishlist-title">My Wishlist</h1>
+            <p class="wishlist-subtitle">Your favorite products saved for later</p>
+        </div>
+        
+        <!-- Wishlist Stats -->
+        <div class="wishlist-stats" *ngIf="wishlistProducts && wishlistProducts.length > 0">
+            <span class="stats-number">{{wishlistProducts.length}}</span>
+            <span>{{wishlistProducts.length === 1 ? 'Item' : 'Items'}} in your wishlist</span>
+        </div>
+        
+        <!-- Empty State -->
+        <div class="empty-wishlist" *ngIf="!wishlistProducts || wishlistProducts.length === 0">
+            <div class="empty-icon">💝</div>
+            <h3>Your wishlist is empty</h3>
+            <p>Start adding products you love to see them here!</p>
+            <button class="btn btn-primary" style="margin-top: 20px;" (click)="goToProducts()">
+                Browse Products
+            </button>
+        </div>
+        
+        <!-- Products Grid -->
+        <div class="products-grid" *ngIf="wishlistProducts && wishlistProducts.length > 0">
+            <div class="product-card" *ngFor="let product of wishlistProducts; trackBy: trackByProductId">
+                <!-- Heart Icon -->
+                <div class="heart-icon">
+                    ❤️
+                </div>
+                
+                <!-- Product Image -->
+                <img 
+                    [src]="product.thumbnail || product.images?.[0] || 'https://via.placeholder.com/300x200?text=Product+Image'" 
+                    [alt]="product.title"
+                    class="product-image"
+                    (click)="viewDetails(product.id)"
+                    (error)="onImageError($event)"
+                >
+                
+                <!-- Product Info -->
+                <div class="product-info">
+                    <h3 class="product-name">{{product.title}}</h3>
+                    <p class="product-description">{{product.description | slice:0:100}}{{product.description?.length > 100 ? '...' : ''}}</p>
+                    
+                    <!-- Price and Discount -->
+                    <div class="product-price">
+                        <span class="current-price">${{product.price | number:'1.2-2'}}</span>
+                        <span class="original-price" *ngIf="product.discountPercentage > 0">
+                            ${{(product.price / (1 - product.discountPercentage / 100)) | number:'1.2-2'}}
+                        </span>
+                        <span class="discount-badge" *ngIf="product.discountPercentage > 0">
+                            {{product.discountPercentage | number:'1.0-0'}}% OFF
+                        </span>
+                    </div>
+                    
+                    <!-- Rating -->
+                    <div class="product-rating" *ngIf="product.rating">
+                        <span class="stars">
+                            <span *ngFor="let star of getStarArray(product.rating)" [innerHTML]="star"></span>
+                        </span>
+                        <span class="rating-text">({{product.rating | number:'1.1-1'}})</span>
+                    </div>
+                    
+                    <!-- Stock Status -->
+                    <div class="stock-status" [ngClass]="{'in-stock': product.stock > 0, 'out-of-stock': product.stock === 0}">
+                        <span *ngIf="product.stock > 0">✅ {{product.stock}} in stock</span>
+                        <span *ngIf="product.stock === 0">❌ Out of stock</span>
+                    </div>
+                    
+                    <!-- Brand and Category -->
+                    <div class="product-meta">
+                        <span class="brand" *ngIf="product.brand">{{product.brand}}</span>
+                        <span class="category" *ngIf="product.category">{{product.category}}</span>
+                    </div>
+                    
+                    <!-- Product Actions -->
+                    <div class="product-actions">
+                        <button 
+                            class="btn btn-primary" 
+                            [disabled]="product.stock === 0"
+                            (click)="addToCart(product)"
+                        >
+                            🛒 {{product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}}
+                        </button>
+                        <button 
+                            class="btn btn-remove" 
+                            title="Remove from wishlist"
+                            (click)="removeFromWishlist(product.id)"
+                        >
+                            🗑️
+                        </button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loading State -->
+        <!-- <div class="empty-wishlist" *ngIf="isLoading">
+            <div class="empty-icon">⏳</div>
+            <h3>Loading your wishlist...</h3>
+        </div> -->
+        
+        <!-- Error State -->
+        <!-- <div class="empty-wishlist" *ngIf="hasError">
+            <div class="empty-icon">⚠️</div>
+            <h3>Unable to load wishlist</h3>
+            <p>Please check your connection and try again.</p>
+            <button class="btn btn-primary" style="margin-top: 20px;" (click)="retry()">
+                Retry
+            </button>
+        </div> -->
+    </div>
+</div>

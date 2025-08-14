@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Auth } from './Services/auth';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class App {
   protected title = 'ShopseeApp';
+  constructor(private auth: Auth) {}
+
+  ngOnInit(){
+    this.auth.autologin();
+  }
+  // onsearchResults(results: any){
+  //   this.searchResults = results;
+  // }
+
 }

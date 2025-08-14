@@ -1,0 +1,73 @@
+<app-search></app-search>
+<div class="results-container">
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="loading-grid">
+      <div *ngFor="let item of [1,2,3,4,5,6]" class="loading-card">
+        <div class="loading-image"></div>
+        <div class="loading-content">
+          <div class="loading-line loading-title"></div>
+          <div class="loading-line loading-price"></div>
+          <div class="loading-line loading-description"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div *ngIf="!isLoading && results" class="results-content">
+    <div class="results-header">
+      <h2 *ngIf="query; else allProductsHeader">
+        Search results for "{{ query }}"
+      </h2>
+      <ng-template #allProductsHeader>
+
+        <h2>Explore Products</h2>
+      </ng-template>
+      <p class="results-count">{{ results.total }} products found</p>
+    </div>
+
+    <div *ngIf="results.products.length === 0" class="no-results">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="no-results-icon">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <h3>No products found</h3>
+      <p>Try adjusting your search terms or browse our categories.</p>
+    </div>
+
+    <div *ngIf="results.products.length > 0" class="products-grid">
+      <div *ngFor="let product of results.products" class="product-card" [id]="'product-' + product.id">
+        <div class="product-image">
+          <img [src]="product.thumbnail" [alt]="product.title" loading="lazy">
+          <div class="product-discount" *ngIf="product.discountPercentage > 0">
+            -{{ product.discountPercentage | number:'1.0-0' }}%
+          </div>
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">{{ product.title }}</h3>
+          <p class="product-brand">{{ product.brand }}</p>
+          <div class="product-rating">
+            <div class="stars">
+              <span *ngFor="let star of [1,2,3,4,5]" 
+                    class="star" 
+                    [class.filled]="star <= product.rating">★</span>
+            </div>
+            <span class="rating-text">({{ product.rating }})</span>
+          </div>
+          <div class="product-price">
+            <span class="current-price">${{ product.price }}</span>
+            <span class="original-price" *ngIf="product.discountPercentage > 0">
+              ${{ (product.price / (1 - product.discountPercentage/100)) | number:'1.2-2' }}
+            </span>
+          </div>
+          <p class="product-description">{{ product.description }}</p>
+          <div class="product-stock" [class.low-stock]="product.stock < 10">
+            {{ product.stock }} in stock
+          </div>
+          <button class="btn btn-dark" (click)="viewDetails(product.id)">View Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

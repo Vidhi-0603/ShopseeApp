@@ -1,0 +1,84 @@
+<!-- <div class="ms-5"></div> -->
+<div class="loadingIndicator" *ngIf = "isLoading"></div>
+<div class="products">
+    <ng-container *ngIf = "!isLoading">
+        <div class="product" 
+            *ngFor="let product of products" 
+            [id]="'product-' + product.id"
+            >
+        <img [src]="product.images[0]" alt="{{ product.title }}"
+        (click)="viewDetails(product.id)" />
+        
+        <div class="product-info">
+            <div class="name-tag">
+                <h3 class="product-name">
+                    {{product.title | slice:0:17}}{{product.title?.length > 17 ? '...' : ''}}
+                </h3>
+                <div class="heart-icon" 
+                *ngIf="WishlistProductIDs.includes(product.id)"
+                (click)="removeFromWishlist(product.id)">
+                        ❤️
+                </div> 
+                <div class="heart-icon" 
+                *ngIf="!WishlistProductIDs.includes(product.id)"
+                (click)="addToWishlist(product)">
+                        🤍
+                </div> 
+            </div>
+
+            <p class="product-description">{{product.description | slice:0:100}}{{product.description?.length > 100 ? '...' : ''}}</p>
+
+            <!-- Price and Discount -->
+            <div class="product-price">
+                <span class="current-price">${{product.price | number:'1.2-2'}}</span>
+                <span class="original-price" *ngIf="product.discountPercentage > 0">
+                    ${{(product.price / (1 - product.discountPercentage / 100)) | number:'1.2-2'}}
+                </span>
+                <span class="discount-badge" *ngIf="product.discountPercentage > 0">
+                    {{product.discountPercentage | number:'1.0-0'}}% OFF
+                </span>
+            </div>
+
+            <!-- Rating -->
+            <div class="product-rating" *ngIf="product.rating">
+                <span class="stars">
+                    <span *ngFor="let star of getStarArray(product.rating)" [innerHTML]="star"></span>
+                </span>
+                <span class="rating-text">({{product.rating | number:'1.1-1'}})</span>
+            </div>
+
+            <!-- Stock Status -->
+            <div class="stock-status" [ngClass]="{'in-stock': product.stock > 0, 'out-of-stock': product.stock === 0}">
+                <span *ngIf="product.stock > 0">✅ {{product.stock}} in stock</span>
+                <span *ngIf="product.stock === 0">❌ Out of stock</span>
+            </div>
+
+            <!-- Brand and Category -->
+            <div class="product-meta">
+                <span class="brand" *ngIf="product.brand">{{product.brand}}</span>
+                <span class="category" *ngIf="product.category">{{product.category}}</span>
+            </div>
+
+            <!-- Product Actions -->
+            <div class="product-actions">
+                <button 
+                    class="btn btn-primary" 
+                    [disabled]="product.stock === 0"
+                    (click)="addToCart(product)"
+                >
+                    🛒 {{product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}}
+                </button>
+                <button
+                    class="btn btn-primary" 
+                    [disabled]="product.stock === 0"
+                    (click)="addToWishlist(product)"
+                >
+                    Add to Wishlist
+                </button>
+
+            </div>
+        </div>
+
+    </div>
+    </ng-container>
+</div>

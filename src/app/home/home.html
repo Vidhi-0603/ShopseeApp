@@ -1,0 +1,7 @@
+<app-search></app-search>
+<app-categories></app-categories>
+<div *ngFor="let group of categorizedProducts">
+    <h3 class="text-2xl m-2 capitalize">{{ group.category | titlecase }}</h3>
+    <app-electronic 
+    [products]="group.products" [isLoading]="isLoading"></app-electronic>
+</div>

@@ -1,0 +1,26 @@
+.categories{
+    overflow-x: auto;
+    margin:140px auto 10px auto;
+    width:90vw;
+    display: flex;
+    padding-left: 2rem;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+.categories::-webkit-scrollbar {
+  display: none;
+}
+.category{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    scroll-snap-align: start;
+    text-align: center;
+    margin: 10px;
+}
+.category img {
+    width: 100px;
+    /* height: 120px;; */
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+}
