@@ -1,5 +1,33 @@
 # ShopseeApp
 
+
+
+## Tech Stack
+
+- HTML
+- CSS
+- JavaScript
+
+  
+## Screenshots
+
+![App Screenshot](Screenshot%202025-08-15%20220408.png)
+![App Screenshot](Screenshot%202025-08-15%20220346.png)
+![App Screenshot](Screenshot%202025-08-15%20220441.png)
+![App Screenshot](Screenshot%202025-08-15%20220508.png)
+![App Screenshot](Screenshot%202025-08-15%20220604.png)
+![App Screenshot](Screenshot%202025-08-15%20220620.png)
+![App Screenshot](Screenshot%202025-08-15%20220642.png)
+![App Screenshot](Screenshot%202025-08-15%20220747.png)
+
+
+
+## Authors
+
+- [@Vidhi-0603](https://github.com/Vidhi-0603)
+
+
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.2.
 
 ## Development server
