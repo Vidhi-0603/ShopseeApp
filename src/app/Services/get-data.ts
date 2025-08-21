@@ -20,7 +20,7 @@ export class GetData {
   setDataForWishlist(product: any,route:string){
     this.auth.checkSession().subscribe((isLoggedIn) => {
       if (isLoggedIn) { 
-        this.productsService.addToWishlist(product, this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe(
+        this.productsService.addToWishlist(product, this.auth.user.value?.Uid || '').subscribe(
           {
             next: ()=>{
               alert("added to wishlist!!");
@@ -41,7 +41,7 @@ export class GetData {
   setDataForCart(product: any,route:string){
     this.auth.checkSession().subscribe((isLoggedIn) => {
       if (isLoggedIn) { 
-        this.productsService.addToCart(product, this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe(
+        this.productsService.addToCart(product, this.auth.user.value?.Uid || '').subscribe(
           {
             next: ()=>{console.log("added to cart successfully!!!")}
           }

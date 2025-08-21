@@ -26,7 +26,7 @@ export class Cart {
 
     this.auth.checkSession().subscribe((isLoggedIn) => {
       if (isLoggedIn) { 
-        this.productsService.displayCart(this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe();
+        this.productsService.displayCart(this.auth.user.value?.Uid || '').subscribe();
         this.productsService.cart$.subscribe((cart) => {
           console.log('cart Data:', cart);
           this.cartProducts = cart; 
@@ -51,13 +51,13 @@ export class Cart {
   const uid = this.auth.user.value?.Uid || '';
   const idToken = this.auth.user.value?.token || '';
 
-  this.productsService.removeFromCart(productId, uid, idToken).subscribe(
+  this.productsService.removeFromCart(productId, uid).subscribe(
     {
       next: () => {
         console.log('Removed from cart');
 
         // Immediately refresh cart in UI after successful removal
-        this.productsService.displayCart(uid, idToken).subscribe();
+        this.productsService.displayCart(uid).subscribe();
       },
       error: (err) => {
         console.error('Error removing item:', err);

@@ -68,7 +68,7 @@ export class Login {
               }
 
               if (redirect.params?.action === 'addToWishlist') {
-                this.productsService.addToWishlist(redirect.params.product,this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe(
+                this.productsService.addToWishlist(redirect.params.product,this.auth.user.value?.Uid || '').subscribe(
                 {
                   next: (response) => {
                     console.log('Product added to wishlist successfully:', response);
@@ -80,7 +80,7 @@ export class Login {
               }
 
               if (redirect.params?.action === 'getWishlist') {
-                this.productsService.displayWishlist(this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe(
+                this.productsService.displayWishlist(this.auth.user.value?.Uid || '').subscribe(
                 {
                   next: (response) => {
                     console.log('Wishlist Data:', response);
@@ -92,7 +92,7 @@ export class Login {
               }
 
               if (redirect.params?.action === 'getCart') {
-                this.productsService.displayCart(this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe(
+                this.productsService.displayCart(this.auth.user.value?.Uid || '').subscribe(
                 {
                   next: (response) => {
                     console.log('Cart Data:', response);
@@ -104,7 +104,7 @@ export class Login {
               }
 
               if (redirect.params?.action === 'addToCart') {
-                this.productsService.addToCart(redirect.params.product,this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe(
+                this.productsService.addToCart(redirect.params.product,this.auth.user.value?.Uid || '').subscribe(
                 {
                   next: (response) => {
                     console.log('Product added to cart successfully:', response);

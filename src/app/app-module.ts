@@ -19,7 +19,8 @@ import { Search } from './search/search';
 import { SearchResults } from './search-results/search-results';
 import { CommonModule } from '@angular/common';
 import { FilterProducts } from './filter-products/filter-products';
-
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from './environments/environment';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { FilterProducts } from './filter-products/filter-products';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

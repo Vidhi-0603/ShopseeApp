@@ -32,10 +32,18 @@ export class Electronic {
 
   ngOnInit() {
     this.isLoading = false;
-    this.productsService.loadWishlist();
-    this.productsService.wishlistIds$.subscribe(ids =>{
-      this.WishlistProductIDs = ids;
-    })
+    this.auth.refreshtoken().subscribe(success => {
+      if (success) {
+        this.productsService.loadWishlist();
+        this.productsService.wishlistIds$.subscribe(ids =>{
+        this.WishlistProductIDs = ids;
+      }) // safe to call wishlist now
+      } else {
+        console.log("User must re-login");
+      }
+    });
+    // this.productsService.loadWishlist();
+    
   }
 
   viewDetails(id: number){
@@ -55,7 +63,7 @@ export class Electronic {
   }
 
   removeFromWishlist(productId: number){
-    this.productsService.removeFromWishlist(productId, this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe({
+    this.productsService.removeFromWishlist(productId, this.auth.user.value?.Uid || '').subscribe({
       next: () => {
         console.log('Removed from wishlist');     
     },

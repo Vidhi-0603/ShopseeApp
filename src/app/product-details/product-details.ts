@@ -68,7 +68,7 @@ export class ProductDetails {
   }
 
    removeFromWishlist(productId: number){
-    this.productsService.removeFromWishlist(productId, this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe({
+    this.productsService.removeFromWishlist(productId, this.auth.user.value?.Uid || '').subscribe({
       next: () => {
         console.log('Removed from wishlist');     
     },

@@ -26,18 +26,29 @@ export class Wishlist {
 
     this.auth.checkSession().subscribe((isLoggedIn) => {
       if (isLoggedIn) { 
-        this.productsService.displayWishlist(this.auth.user.value?.Uid || '',this.auth.user.value?.token || '').subscribe();
-        this.productsService.wishlist$.subscribe((wishlist) => {
-          console.log('Wishlist Data:', wishlist);
-          this.wishlistProducts = wishlist; 
-        });
+
+        this.auth.refreshtoken().subscribe(success => {
+          if (success) {
+
+            this.auth.user.subscribe(user => {
+              if (user && user.Uid) {
+                this.productsService.displayWishlist(user.Uid).subscribe();
+              }
+            });
+                this.productsService.wishlist$.subscribe((wishlist) => {
+                  console.log('Wishlist Data:', wishlist);
+                  this.wishlistProducts = wishlist; 
+                }); // safe to call wishlist now
+          } else {
+            console.log("User must re-login");
+          }
+        }); 
       } else {
         this.redirect.setRedirect('/wishlist/', { action: 'getWishlist' });
         this.router.navigate(['/login']);
         return;
       }
     });
-
   }
   
 
@@ -79,7 +90,7 @@ export class Wishlist {
   }
 //wishlist component
   removeFromWishlist(productId: number){
-    this.productsService.removeFromWishlist(productId, this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe({
+    this.productsService.removeFromWishlist(productId, this.auth.user.value?.Uid || '').subscribe({
       next: () => {
         console.log('Removed from wishlist');      
       },
@@ -92,7 +103,8 @@ export class Wishlist {
   }
   
   addToCart(product: any){
-    this.productsService.addToCart(product,this.auth.user.value?.Uid || '', this.auth.user.value?.token || '').subscribe({
+ 
+    this.productsService.addToCart(product,this.auth.user.value?.Uid || '').subscribe({
       next:(res) =>{console.log('Product added to cart successfully!',res)},
       error: (err)=>{console.log('Error adding product to cart!',err)}
     });
